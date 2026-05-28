@@ -2,7 +2,8 @@ terraform {
   required_version = ">=0.13.0"
   required_providers {
     aws = {
-      source  = "hashicorp/aws"
+      # source  = "hashicorp/aws"
+      source = "trialh9yx8a.jfrog.io/aws-tf-gha-jfrog-terraform-rt-ns-hashicorp/aws"
       version = "~>3.0"
     }
   }

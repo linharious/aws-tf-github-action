@@ -28,3 +28,4 @@ resource "aws_dynamodb_table" "terraform_locks" {
     type = "S"
   }
 }
+# lock file in the same folder of tfstate 
