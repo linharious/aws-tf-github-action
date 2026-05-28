@@ -3,7 +3,7 @@ terraform {
   required_providers {
     aws = {
       # source  = "hashicorp/aws"
-      source = "trialh9yx8a.jfrog.io/aws-tf-gha-jfrog-terraform-rt-ns-hashicorp/aws"
+      source  = "trialh9yx8a.jfrog.io/aws-tf-gha-jfrog-terraform-rt-ns-hashicorp/aws"
       version = "~>3.0"
     }
   }
