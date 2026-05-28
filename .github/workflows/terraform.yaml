@@ -30,6 +30,14 @@ jobs:
           oidc-provider-name: github-jfrog
           oidc-audience: test
 
+      - name: Configure Terraform credentials for JFrog
+        run: |
+          cat > ~/.terraformrc << EOF
+          credentials "trialh9yx8a.jfrog.io" {
+            token = "${{ secrets.JFROG_TOKEN }}"
+          }
+          EOF
+
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v1
         with:
