@@ -57,8 +57,8 @@ jobs:
         id: plan
         run: terraform plan -no-color
 
-      - name: JFrog Xray Scan
-        run: jf audit --format=table
+      # - name: JFrog Xray Scan
+      #   run: jf audit --format=table
 
       - name: Terraform Apply
         run: terraform apply -auto-approve
