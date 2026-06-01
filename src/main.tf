@@ -9,12 +9,12 @@ terraform {
   }
 
   backend "s3" {
-    bucket         = "tf-state-backend-test-9875"
-    key            = "global/s3/terraform.tfstate"
-    region         = "us-west-2"
+    bucket = "tf-state-backend-test-9875"
+    key    = "global/s3/terraform.tfstate"
+    region = "us-west-2"
     # dynamodb_table = "terraform-state-locking"
-    use_lockfile   = true
-    encrypt        = true
+    use_lockfile = true
+    encrypt      = true
   }
 }
 
