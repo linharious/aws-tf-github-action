@@ -40,10 +40,9 @@ jobs:
 
       - name: Configure Terraform credentials for JFrog
         run: |
-          JFROG_ACCESS_TOKEN=$(jf access-token-create --expiry=3600 --format=json | jq -r '.access_token')
           cat > ~/.terraformrc << EOF
           credentials "trialh9yx8a.jfrog.io" {
-            token = "$JFROG_ACCESS_TOKEN"
+            token = "$JF_ACCESS_TOKEN"
           }
           EOF
 
