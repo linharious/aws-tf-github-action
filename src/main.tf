@@ -8,9 +8,9 @@ terraform {
   }
 
   backend "s3" {
-    bucket = "tf-state-backend-ca-central-9875"
-    key    = "global/s3/terraform.tfstate"
-    region = "ca-central-1"
+    bucket       = "tf-state-backend-ca-central-9875"
+    key          = "global/s3/terraform.tfstate"
+    region       = "ca-central-1"
     use_lockfile = true
     encrypt      = true
   }
