@@ -28,23 +28,15 @@ jobs:
         uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: arn:aws:iam::080147880634:role/aws-tf-gha-github-actions-role
-          aws-region: us-west-2
+          aws-region: ca-central-1
 
       - name: Setup JFrog CLI
         uses: jfrog/setup-jfrog-cli@v4
         env:
-          JF_URL: https://trialh9yx8a.jfrog.io
+          JF_URL: https://jfrogcfv.jfrog.io
         with:
           oidc-provider-name: github-jfrog
           oidc-audience: test
-
-      - name: Configure Terraform credentials for JFrog
-        run: |
-          cat > ~/.terraformrc << EOF
-          credentials "trialh9yx8a.jfrog.io" {
-            token = "$JF_ACCESS_TOKEN"
-          }
-          EOF
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v1

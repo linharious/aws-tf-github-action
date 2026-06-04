@@ -1,0 +1,87 @@
+name: "Publish Terraform Module"
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "src/modules/vpc/**"
+
+jobs:
+  publish:
+    name: "Publish VPC Module to JFrog"
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: Setup JFrog CLI
+        uses: jfrog/setup-jfrog-cli@v4
+        env:
+          JF_URL: https://jfrogcfv.jfrog.io
+        with:
+          oidc-provider-name: github-jfrog
+          oidc-audience: test
+
+      - name: Calculate next version
+        id: version
+        run: |
+          # get latest published version from JFrog
+          LATEST=$(jf rt s "aws-tf-gha-jfrog-terraform-modules-local/jfrog/vpc/aws/*.zip" \
+            --format=json 2>/dev/null \
+            | jq -r '.[].name' \
+            | grep -oP 'v\d+\.\d+\.\d+' \
+            | sort -V | tail -1)
+
+          # default to v0.0.0 if no version exists yet
+          if [ -z "$LATEST" ]; then
+            LATEST="v0.0.0"
+          fi
+
+          echo "Latest version: $LATEST"
+
+          # parse version numbers
+          MAJOR=$(echo $LATEST | cut -d. -f1 | tr -d 'v')
+          MINOR=$(echo $LATEST | cut -d. -f2)
+          PATCH=$(echo $LATEST | cut -d. -f3)
+
+          # get commit message
+          COMMIT_MSG=$(git log -1 --pretty=%B)
+          echo "Commit message: $COMMIT_MSG"
+
+          # determine version bump
+          if echo "$COMMIT_MSG" | grep -qE "BREAKING CHANGE|feat!:"; then
+            MAJOR=$((MAJOR + 1)); MINOR=0; PATCH=0
+            echo "Bump type: MAJOR"
+          elif echo "$COMMIT_MSG" | grep -qE "^feat(\(.*\))?:"; then
+            MINOR=$((MINOR + 1)); PATCH=0
+            echo "Bump type: MINOR"
+          else
+            PATCH=$((PATCH + 1))
+            echo "Bump type: PATCH"
+          fi
+
+          NEW_VERSION="v$MAJOR.$MINOR.$PATCH"
+          echo "New version: $NEW_VERSION"
+          echo "new_version=$NEW_VERSION" >> $GITHUB_OUTPUT
+
+      - name: Publish module to JFrog
+        working-directory: src/modules/vpc
+        run: |
+          jf tf p \
+            --namespace=jfrog \
+            --provider=aws \
+            --tag=${{ steps.version.outputs.new_version }}
+
+      - name: Create git tag
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git tag ${{ steps.version.outputs.new_version }}
+          git push origin ${{ steps.version.outputs.new_version }}

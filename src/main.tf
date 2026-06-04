@@ -2,29 +2,27 @@ terraform {
   required_version = ">=1.10.0"
   required_providers {
     aws = {
-      # source  = "hashicorp/aws"
-      source  = "trialh9yx8a.jfrog.io/aws-tf-gha-jfrog-terraform-rt-ns-hashicorp/aws"
+      source  = "hashicorp/aws"
       version = "~>3.0"
     }
   }
 
   backend "s3" {
-    bucket = "tf-state-backend-test-9875"
+    bucket = "tf-state-backend-ca-central-9875"
     key    = "global/s3/terraform.tfstate"
-    region = "us-west-2"
-    # dynamodb_table = "terraform-state-locking"
+    region = "ca-central-1"
     use_lockfile = true
     encrypt      = true
   }
 }
 
 provider "aws" {
-  region = "us-west-2"
+  region = "ca-central-1"
 }
 
 module "tf-state" {
   source      = "./modules/tf-state"
-  bucket_name = "tf-state-backend-test-9875"
+  bucket_name = "tf-state-backend-ca-central-9875"
 }
 
 module "vpc-infra" {
