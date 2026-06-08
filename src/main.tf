@@ -20,6 +20,11 @@ provider "aws" {
   region = "ca-central-1"
 }
 
+import {
+  to = module.tf-state.aws_s3_bucket.terraform_state
+  id = "tf-state-ca-central-202606"
+}
+
 module "tf-state" {
   source      = "./modules/tf-state"
   bucket_name = "tf-state-ca-central-202606"
