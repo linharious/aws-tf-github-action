@@ -38,6 +38,23 @@ jobs:
           oidc-provider-name: github-jfrog
           oidc-audience: test
 
+      - name: Bootstrap S3 State Bucket
+        run: |
+          aws s3api create-bucket \
+            --bucket tf-state-ca-central-202606 \
+            --region ca-central-1 \
+            --create-bucket-configuration LocationConstraint=ca-central-1 \
+            2>/dev/null || true
+
+          aws s3api put-bucket-versioning \
+            --bucket tf-state-ca-central-202606 \
+            --versioning-configuration Status=Enabled
+
+          aws s3api put-bucket-encryption \
+            --bucket tf-state-ca-central-202606 \
+            --server-side-encryption-configuration \
+            '{"Rules":[{"ApplyServerSideEncryptionByDefault":{"SSEAlgorithm":"AES256"}}]}'
+
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v1
         with:
