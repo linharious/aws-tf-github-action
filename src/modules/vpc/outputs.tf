@@ -3,6 +3,7 @@ output "cc_vpc_id" {
   value       = aws_vpc.ccVPC.id
 }
 
+
 output "cc_public_subnets" {
   description = "Will be used by Web Server Module to set subnet_ids"
   value = [
