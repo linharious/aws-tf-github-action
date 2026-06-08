@@ -2,4 +2,4 @@ version: 1
 type: terraform
 deployer:
     repo: aws-tf-gha-jfrog-terraform-modules-local
-    serverId: jfrogcfv
+    serverId: setup-jfrog-cli-server
