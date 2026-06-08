@@ -1,0 +1,48 @@
+name: "Destroy Terraform Resources"
+
+on:
+  schedule:
+    - cron: "0 23 * * *"
+  workflow_dispatch:
+
+jobs:
+  destroy:
+    name: "Terraform Destroy"
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+
+    defaults:
+      run:
+        working-directory: src
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::987213268383:role/aws-tf-gha-github-actions-role
+          aws-region: ca-central-1
+
+      - name: Setup JFrog CLI
+        uses: jfrog/setup-jfrog-cli@v4
+        env:
+          JF_URL: https://jfrogcfv.jfrog.io
+        with:
+          oidc-provider-name: github-jfrog
+          oidc-audience: test
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v1
+        with:
+          terraform_version: 1.10.0
+          terraform_wrapper: false
+
+      - name: Terraform Init
+        run: terraform init -migrate-state
+
+      - name: Terraform Destroy
+        run: terraform destroy -auto-approve
