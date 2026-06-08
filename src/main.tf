@@ -8,7 +8,7 @@ terraform {
   }
 
   backend "s3" {
-    bucket       = "tf-state-ca-central-202626"
+    bucket       = "tf-state-ca-central-202606"
     key          = "global/s3/terraform.tfstate"
     region       = "ca-central-1"
     use_lockfile = true
@@ -22,7 +22,7 @@ provider "aws" {
 
 module "tf-state" {
   source      = "./modules/tf-state"
-  bucket_name = "tf-state-ca-central-202626"
+  bucket_name = "tf-state-ca-central-202606"
 }
 
 module "vpc-infra" {

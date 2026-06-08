@@ -27,7 +27,7 @@ jobs:
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          role-to-assume: arn:aws:iam::080147880634:role/aws-tf-gha-github-actions-role
+          role-to-assume: arn:aws:iam::987213268383:role/aws-tf-gha-github-actions-role
           aws-region: ca-central-1
 
       - name: Setup JFrog CLI
