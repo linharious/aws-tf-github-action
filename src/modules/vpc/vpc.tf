@@ -93,6 +93,7 @@ resource "aws_route_table" "ccPublicRT" {
     Project = "AWS TF Github Action"
   }
 }
+
 resource "aws_route_table" "ccPrivateRT1" {
   vpc_id = aws_vpc.ccVPC.id
   route {
@@ -104,6 +105,7 @@ resource "aws_route_table" "ccPrivateRT1" {
     Project = "AWS TF Github Action"
   }
 }
+
 resource "aws_route_table" "ccPrivateRT2" {
   vpc_id = aws_vpc.ccVPC.id
   route {
