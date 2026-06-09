@@ -4,7 +4,7 @@ resource "aws_vpc" "ccVPC" {
   tags = {
     Name        = "ccVPC"
     Project     = "AWS TF Github Action"
-    Environment = "dev"
+    Environment = var.environment
   }
 }
 
@@ -13,6 +13,7 @@ resource "aws_internet_gateway" "ccIGW" {
   tags = {
     Name    = "ccIGW"
     Project = "AWS TF Github Action"
+
   }
 }
 
