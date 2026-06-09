@@ -2,8 +2,9 @@ resource "aws_vpc" "ccVPC" {
   cidr_block       = var.vpc_cidr
   instance_tenancy = "default"
   tags = {
-    Name    = "ccVPC"
-    Project = "AWS TF Github Action"
+    Name        = "ccVPC"
+    Project     = "AWS TF Github Action"
+    Environment = "dev"
   }
 }
 
