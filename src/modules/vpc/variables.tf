@@ -20,7 +20,7 @@ variable "private_subnet_cidrs" {
 }
 
 variable "environment" {
-  type = string
+  type        = string
   description = "Deployment environment name"
-  default = "dev"
+  default     = "dev"
 }

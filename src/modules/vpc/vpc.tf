@@ -49,7 +49,7 @@ resource "aws_eip" "ccNatGatewayEIP2" {
 }
 resource "aws_nat_gateway" "ccNatGateway2" {
   allocation_id = aws_eip.ccNatGatewayEIP2.id
-  subnet_id     = aws_subnet.ccPublicSubnet2
+  subnet_id     = aws_subnet.ccPublicSubnet2.id
   tags = {
     Name    = "ccNatGateway2"
     Project = "AWS TF Github Action"
