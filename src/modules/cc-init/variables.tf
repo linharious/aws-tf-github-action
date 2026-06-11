@@ -3,6 +3,11 @@ variable "bucket_name" {
   type        = string
 }
 
+variable "app_bucket_name" {
+  description = "S3 bucket name the EC2 app is allowed to access"
+  type        = string
+}
+
 variable "vpc_cidr" {
   description = "CIDR for VPC"
   type        = string
