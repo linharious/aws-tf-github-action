@@ -5,7 +5,7 @@ on:
     branches:
       - main
     paths:
-      - "src/modules/vpc/**"
+      - "src/modules/cc-vpc/**"
 
 jobs:
   publish:
@@ -29,65 +29,12 @@ jobs:
           oidc-provider-name: github-jfrog
           oidc-audience: test
 
-      - name: Calculate next version
-        id: version
-        run: |
-          # get latest version from git tags (source of truth)
-          LATEST=$(git tag -l 'v*.*.*' | sort -V | tail -1)
-
-          # default to v0.0.0 if no version tag exists yet
-          if [ -z "$LATEST" ]; then
-            LATEST="v0.0.0"
-          fi
-
-          echo "Latest version: $LATEST"
-
-          # parse version numbers
-          MAJOR=$(echo $LATEST | cut -d. -f1 | tr -d 'v')
-          MINOR=$(echo $LATEST | cut -d. -f2)
-          PATCH=$(echo $LATEST | cut -d. -f3)
-
-          # get commit message
-          COMMIT_MSG=$(git log -1 --pretty=%B)
-          echo "Commit message: $COMMIT_MSG"
-
-          # determine version bump
-          if echo "$COMMIT_MSG" | grep -qE "BREAKING CHANGE|feat!:"; then
-            MAJOR=$((MAJOR + 1)); MINOR=0; PATCH=0
-            echo "Bump type: MAJOR"
-          elif echo "$COMMIT_MSG" | grep -qE "^feat(\(.*\))?:"; then
-            MINOR=$((MINOR + 1)); PATCH=0
-            echo "Bump type: MINOR"
-          else
-            PATCH=$((PATCH + 1))
-            echo "Bump type: PATCH"
-          fi
-
-          NEW_VERSION="v$MAJOR.$MINOR.$PATCH"
-          echo "New version: $NEW_VERSION"
-          echo "new_version=$NEW_VERSION" >> $GITHUB_OUTPUT
-
       - name: Publish module to JFrog
-        working-directory: src/modules/vpc
+        working-directory: src/modules/cc-vpc
         run: |
           jf tf p \
             --namespace=jfrog \
             --provider=aws \
-            --tag=${{ steps.version.outputs.new_version }}
+            --tag=${{ github.ref_name }}
 
-      - name: Create git tag
-        run: |
-          git config user.name "github-actions"
-          git config user.email "github-actions@github.com"
-          NEW_VERSION=${{ steps.version.outputs.new_version }}
-
-          # skip if tag already exists remotely or locally
-          if git ls-remote --tags origin | grep -q "refs/tags/$NEW_VERSION$"; then
-            echo "Tag $NEW_VERSION already exists remotely, skipping."
-          elif git tag | grep -q "^$NEW_VERSION$"; then
-            echo "Tag $NEW_VERSION already exists locally, skipping."
-          else
-            git tag $NEW_VERSION
-            git push origin $NEW_VERSION
-            echo "Tagged and pushed $NEW_VERSION"
-          fi
+    

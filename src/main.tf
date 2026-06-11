@@ -26,12 +26,12 @@ import {
 }
 
 module "tf-state" {
-  source      = "./modules/tf-state"
+  source      = "./modules/cc-tf-state"
   bucket_name = "tf-state-ca-central-202606"
 }
 
 module "vpc-infra" {
-  source               = "./modules/vpc"
+  source               = "./modules/cc-vpc"
   vpc_cidr             = local.vpc_cidr
   availability_zones   = local.availability_zones
   public_subnet_cidrs  = local.public_subnet_cidrs
