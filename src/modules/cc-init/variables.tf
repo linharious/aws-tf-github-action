@@ -1,8 +1,3 @@
-variable "bucket_name" {
-  description = "Remote S3 Bucket Name"
-  type        = string
-}
-
 variable "app_bucket_name" {
   description = "S3 bucket name the EC2 app is allowed to access"
   type        = string

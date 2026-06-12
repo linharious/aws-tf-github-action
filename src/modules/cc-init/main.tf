@@ -1,8 +1,3 @@
-module "cc-tf-state" {
-  source      = "../cc-tf-state"
-  bucket_name = var.bucket_name
-}
-
 module "cc-vpc" {
   source               = "../cc-vpc"
   vpc_cidr             = var.vpc_cidr
