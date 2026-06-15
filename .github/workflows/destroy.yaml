@@ -44,5 +44,10 @@ jobs:
       - name: Terraform Init
         run: terraform init -migrate-state
 
+      - name: Evict state bucket from state
+        run: |
+          terraform state rm module.cc-init.module.cc-tf-state || true
+          terraform state rm module.tf-state || true
+
       - name: Terraform Destroy
         run: terraform destroy -auto-approve
