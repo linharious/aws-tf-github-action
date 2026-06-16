@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.0](https://github.com/linharious/aws-tf-github-action/compare/v1.0.0...v1.1.0) (2026-06-16)
+
+
+### Features
+
+* add cc-s3 app bucket and scaffold serverless modules (cc-lambda, cc-apigw) ([4b1eb4f](https://github.com/linharious/aws-tf-github-action/commit/4b1eb4ff95a9b583728158dab9fdb929b6ddd9ef))
+
 ## 1.0.0 (2026-06-15)
 
 
