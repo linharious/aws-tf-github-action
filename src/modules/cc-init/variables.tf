@@ -27,3 +27,8 @@ variable "environment" {
   description = "Deployment environment name (dev, staging, prod)"
   type        = string
 }
+
+variable "lambda_image_uri" {
+  description = "ECR image URI for the Python app packaged as a container"
+  type        = string
+}

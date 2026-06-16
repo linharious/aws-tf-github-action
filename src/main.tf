@@ -28,4 +28,5 @@ module "cc-init" {
   private_subnet_cidrs = local.private_subnet_cidrs
   environment          = local.environment
   app_bucket_name      = local.app_bucket_name
+  lambda_image_uri     = local.lambda_image_uri
 }
