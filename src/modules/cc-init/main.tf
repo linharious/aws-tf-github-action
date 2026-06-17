@@ -28,7 +28,8 @@ module "cc-s3" {
 # module "cc-lambda" {
 #   source          = "../cc-lambda"
 #   environment     = var.environment
-#   image_uri       = var.lambda_image_uri
+#   image_uri       = var.lambda_image_uri #delete this line when run application
+# #image_uri       = "${module.cc-ecr.cc_ecr_repository_url}:latest"
 #   app_bucket_name = module.cc-s3.cc_app_bucket_id
 # }
 
@@ -38,3 +39,8 @@ module "cc-s3" {
 #   lambda_invoke_arn    = module.cc-lambda.cc_lambda_invoke_arn
 #   lambda_function_name = module.cc-lambda.cc_lambda_function_name
 # }
+
+module "cc-ecr" {
+  source      = "../cc-ecr"
+  environment = var.environment
+}

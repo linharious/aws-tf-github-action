@@ -28,6 +28,7 @@ variable "environment" {
   type        = string
 }
 
+#delete this var when run application
 variable "lambda_image_uri" {
   description = "ECR image URI for the Python app packaged as a container"
   type        = string
