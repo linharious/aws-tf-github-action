@@ -1,8 +1,3 @@
-variable "app_bucket_name" {
-  description = "S3 bucket name the EC2 app is allowed to access"
-  type        = string
-}
-
 variable "vpc_cidr" {
   description = "CIDR for VPC"
   type        = string
@@ -25,11 +20,5 @@ variable "private_subnet_cidrs" {
 
 variable "environment" {
   description = "Deployment environment name (dev, staging, prod)"
-  type        = string
-}
-
-#delete this var when run application
-variable "lambda_image_uri" {
-  description = "ECR image URI for the Python app packaged as a container"
   type        = string
 }
