@@ -27,13 +27,13 @@ jobs:
           role-to-assume: arn:aws:iam::987213268383:role/aws-tf-gha-github-actions-role
           aws-region: ca-central-1
 
-      - name: Setup JFrog CLI
-        uses: jfrog/setup-jfrog-cli@v4
-        env:
-          JF_URL: https://jfrogcfv.jfrog.io
-        with:
-          oidc-provider-name: github-jfrog
-          oidc-audience: test
+      # - name: Setup JFrog CLI
+      #   uses: jfrog/setup-jfrog-cli@v4
+      #   env:
+      #     JF_URL: https://jfrogcfv.jfrog.io
+      #   with:
+      #     oidc-provider-name: github-jfrog
+      #     oidc-audience: test
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v1
