@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.2.0](https://github.com/linharious/aws-tf-github-action/compare/v1.1.0...v1.2.0) (2026-06-25)
+
+
+### Features
+
+* add cc-ecr module for container image registry ([314742e](https://github.com/linharious/aws-tf-github-action/commit/314742e7cc7cf3c66d8baf44d0fb8dda2de7ba30))
+* establish reusable infrastructure foundation (vpc, iam, security, ci/cd) ([091c185](https://github.com/linharious/aws-tf-github-action/commit/091c185bf156489050f2e85f0d1ddc21262bb7cc))
+
 ## [1.1.0](https://github.com/linharious/aws-tf-github-action/compare/v1.0.0...v1.1.0) (2026-06-16)
 
 
