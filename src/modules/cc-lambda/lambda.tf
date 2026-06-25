@@ -50,6 +50,7 @@ resource "aws_lambda_function" "ccCreditRiskCalc" {
   environment {
     variables = {
       APP_BUCKET = var.app_bucket_name
+      MODELS_DIR = "s3://${var.app_bucket_name}/models"
     }
   }
 

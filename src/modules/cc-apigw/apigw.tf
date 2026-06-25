@@ -23,6 +23,14 @@ resource "aws_apigatewayv2_route" "ccApiRoute" {
   target    = "integrations/${aws_apigatewayv2_integration.ccApiLambda.id}"
 }
 
+# Catch-all so the FastAPI app also serves the UI pages and static assets;
+# Mangum dispatches paths internally.
+resource "aws_apigatewayv2_route" "ccApiDefaultRoute" {
+  api_id    = aws_apigatewayv2_api.ccApi.id
+  route_key = "$default"
+  target    = "integrations/${aws_apigatewayv2_integration.ccApiLambda.id}"
+}
+
 resource "aws_apigatewayv2_stage" "ccApiStage" {
   api_id      = aws_apigatewayv2_api.ccApi.id
   name        = "$default"
